@@ -10,9 +10,7 @@ public class Ball{
 	int chand;
 	int thand;
 	int st;
-
 	int hand_x, hand_y;
-
 	int tPer, cPer;   // tPer : throw person,  cPer : catch person
 
 	final static int OBJECT_HAND = 0x01;
@@ -74,22 +72,20 @@ public class Ball{
 		// Determine Catch&Throw person
 
 		if(c < 0){
-			cPer = (int)(-c / 2) % jmj.iPerNo;
-
+			cPer = (int)(-c / 2) % Jmj.iPerNo;
 		}else{
-			cPer = (int)(c / 2) % jmj.iPerNo;
+			cPer = (int)(c / 2) % Jmj.iPerNo;
 		}
 
 		if(c0 < 0){
-			tPer = (int)(-c0 / 2) % jmj.iPerNo;
-
+			tPer = (int)(-c0 / 2) % Jmj.iPerNo;
 		}else{
-			tPer = (int)(c0 / 2) % jmj.iPerNo;
+			tPer = (int)(c0 / 2) % Jmj.iPerNo;
 		}
 
 		if(iFlag == Math.abs(bh)){
-			cPer = (Math.abs(bh) / 2) % jmj.iPerNo;
-			tPer = (Math.abs(bh) / 2) % jmj.iPerNo;
+			cPer = (Math.abs(bh) / 2) % Jmj.iPerNo;
+			tPer = (Math.abs(bh) / 2) % Jmj.iPerNo;
 		}
 
 		if((st & OBJECT_HAND) != 0){
@@ -128,15 +124,15 @@ public class Ball{
 					if(h == 1){
 						if(jmj.mirror == false){
 							if(chand != 0){
-								jmj.lhand[(cPer+1) % jmj.iPerNo].st |= OBJECT_MOVE2;
+								jmj.lhand[(cPer+1) % Jmj.iPerNo].st |= OBJECT_MOVE2;
 							}else{
-								jmj.rhand[(cPer+1) % jmj.iPerNo].st |= OBJECT_MOVE2;
+								jmj.rhand[(cPer+1) % Jmj.iPerNo].st |= OBJECT_MOVE2;
 							}
 						}else{
 							if(chand != 0){
-								jmj.lhand[(cPer + jmj.iPerNo - 1) % jmj.iPerNo].st |= OBJECT_MOVE2;
+								jmj.lhand[(cPer + Jmj.iPerNo - 1) % Jmj.iPerNo].st |= OBJECT_MOVE2;
 							}else{
-								jmj.rhand[(cPer + jmj.iPerNo - 1) % jmj.iPerNo].st |= OBJECT_MOVE2;
+								jmj.rhand[(cPer + Jmj.iPerNo - 1) % Jmj.iPerNo].st |= OBJECT_MOVE2;
 							}
 						}
 					}
@@ -145,9 +141,9 @@ public class Ball{
 					// ・一人 かつ h=2
 					// ・複数 かつ h=iPerNo*2 かつ モーションが同じ場合
 
-					//	  if(h != jmj.iPerNo * 2){
+					//	  if(h != Jmj.iPerNo * 2){
 					//	  if(h != 2){
-					//	  if(jmj.iPerNo != 1 || h != 2){
+					//	  if(Jmj.iPerNo != 1 || h != 2){
 
 					//jmj.MessageBox("hand_pos前 1\nc:" + c + "\nchand:" + chand + "\ncPer:" + cPer);
 
@@ -163,9 +159,9 @@ public class Ball{
 
 					//jmj.MessageBox("hand_pos後");
 
-					if((jmj.iPerNo == 1 && h == 2) ||
-							(jmj.iPerNo > 1
-							 && h == jmj.iPerNo * 2
+					if((Jmj.iPerNo == 1 && h == 2) ||
+							(Jmj.iPerNo > 1
+							 && h == Jmj.iPerNo * 2
 							 && tpox == rpox
 							 && tpoz == rpoz )){
 
@@ -202,7 +198,7 @@ public class Ball{
 					hand_pos(c, chand, tPer);
 					tpox = hand_x;
 					tpoz = hand_y;
-					hand_pos(c + 2*jmj.iPerNo, chand, cPer);
+					hand_pos(c + 2*Jmj.iPerNo, chand, cPer);
 					rpox = hand_x;
 					rpoz = hand_y;
 					if(tpox != rpox || tpoz != rpoz){
@@ -259,25 +255,25 @@ public class Ball{
 		// add position data on Throw & Catch person
 		if((st & OBJECT_HAND) == 0){
 			if(jmj.mirror == false){
-				tpox += jmj.iXData[tPer] * 40 / jmj.PXY;
-				rpox += jmj.iXData[cPer] * 40 / jmj.PXY;
+				tpox += jmj.iXData[tPer] * 40 / Jmj.PXY;
+				rpox += jmj.iXData[cPer] * 40 / Jmj.PXY;
 			}else{
-				tpox -= jmj.iXData[tPer] * 40 / jmj.PXY;
-				rpox -= jmj.iXData[cPer] * 40 / jmj.PXY;
+				tpox -= jmj.iXData[tPer] * 40 / Jmj.PXY;
+				rpox -= jmj.iXData[cPer] * 40 / Jmj.PXY;
 			}
-			tpoz += jmj.iYData[tPer] * 20 / jmj.PXY;
-			rpoz += jmj.iYData[cPer] * 20 / jmj.PXY;
+			tpoz += jmj.iYData[tPer] * 20 / Jmj.PXY;
+			rpoz += jmj.iYData[cPer] * 20 / Jmj.PXY;
 
 		}else{
 			if(jmj.mirror == false){
-				tpox += jmj.iXData[jmj.jPerNo] * 40 / jmj.PXY;
-				rpox += jmj.iXData[jmj.jPerNo] * 40 / jmj.PXY;
+				tpox += jmj.iXData[jmj.jPerNo] * 40 / Jmj.PXY;
+				rpox += jmj.iXData[jmj.jPerNo] * 40 / Jmj.PXY;
 			}else{
-				tpox -= jmj.iXData[jmj.jPerNo] * 40 / jmj.PXY;
-				rpox -= jmj.iXData[jmj.jPerNo] * 40 / jmj.PXY;
+				tpox -= jmj.iXData[jmj.jPerNo] * 40 / Jmj.PXY;
+				rpox -= jmj.iXData[jmj.jPerNo] * 40 / Jmj.PXY;
 			}
-			tpoz += jmj.iYData[jmj.jPerNo] * 20 / jmj.PXY;
-			rpoz += jmj.iYData[jmj.jPerNo] * 20 / jmj.PXY;
+			tpoz += jmj.iYData[jmj.jPerNo] * 20 / Jmj.PXY;
+			rpoz += jmj.iYData[jmj.jPerNo] * 20 / Jmj.PXY;
 		}
 
 		if( (st & OBJECT_HAND) == 0 && c < 0 ){
@@ -308,12 +304,11 @@ public class Ball{
 				y = (long)((float)jmj.high[Math.abs(bh)] * (1 - square(fx)));
 			}
 
-			y += (float)(fx * (rpoz - tpoz) + rpoz + tpoz)
-				* jmj.dpm / 40;
+			y += (float)(fx * (rpoz - tpoz) + rpoz + tpoz) * jmj.dpm / 40;
 			fx = (fx * (rpox - tpox) + rpox + tpox) / 20;
 		}
 
-		x = (long)(fx * jmj.dpm * jmj.KW);
+		x = (long)(fx * jmj.dpm * Jmj.KW);
 		gx = (int)(x - 11);
 
 		if((st & OBJECT_HAND) != 0){
@@ -339,13 +334,13 @@ public class Ball{
 			}
 			if((c & 1) != 0){
 				a2 = (--c + h);
-				a3 = a2 / (jmj.iPerNo * 2);
+				a3 = a2 / (Jmj.iPerNo * 2);
 				a3 = a3 * 2;
 				if((a2 / 2) * 2 != a2) a3++;
 				a = (a3 % (jmj.motionlength[person] / 4)) * 4 + 2;
 			}else{
 				a2 = (c + h);
-				a3 = a2 / (jmj.iPerNo * 2);
+				a3 = a2 / (Jmj.iPerNo * 2);
 				a3 = a3 * 2;
 				if((a2 / 2) * 2 != a2) a3++;
 				a = (a3 % (jmj.motionlength[person] / 4)) * 4;
@@ -355,13 +350,13 @@ public class Ball{
 				c--;
 			}if((c & 1) != 0){
 				a2 = (c - h);
-				a3 = a2 / (jmj.iPerNo * 2);
+				a3 = a2 / (Jmj.iPerNo * 2);
 				a3 = a3 * 2;
 				if((a2 / 2) * 2 != a2) a3++;
 				a = (a3 % (jmj.motionlength[person] / 4)) * 4 + 2;
 			}else{
 				a2 = (c + 1 - h);
-				a3 = a2 / (jmj.iPerNo * 2);
+				a3 = a2 / (Jmj.iPerNo * 2);
 				a3 = a3 * 2;
 				if((a2 / 2) * 2 != a2) a3++;
 				a = (a3 % (jmj.motionlength[person] / 4)) * 4;

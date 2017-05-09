@@ -2,10 +2,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import java.awt.List;
-import java.lang.*;
-import java.io.*;
 
 public class JmjController extends Frame implements AdjustmentListener, ActionListener{
+	private static final long serialVersionUID = -4281429447311487691L;
 	private static final String QUIT = "Quit";
 	private static final String TRY_A_NEW_SITESWAP = "Try a new siteswap";
 
@@ -65,6 +64,7 @@ public class JmjController extends Frame implements AdjustmentListener, ActionLi
 	static int iPersonNo;   // == jmj.iPerNo;
 
 	class PatternList extends List{
+		private static final long serialVersionUID = -2118886900172535681L;
 		void chooseValidIndex(){
 			int i;
 			for(i = getSelectedIndex(); i < getItemCount(); i++){
@@ -83,6 +83,7 @@ public class JmjController extends Frame implements AdjustmentListener, ActionLi
 		}
 	}
 	class PatternFileList extends List{
+		private static final long serialVersionUID = -8123075254992794852L;
 		void create(){
 			removeAll();
 			if(jmj.patternfiles != null){
@@ -94,6 +95,7 @@ public class JmjController extends Frame implements AdjustmentListener, ActionLi
 		}
 	}
 	static class ListWithQuicksort extends List{
+		private static final long serialVersionUID = 8218993129332150086L;
 		protected void quickSort(int left, int right){
 			int i, last;
 			if(left >= right) return;
@@ -116,6 +118,7 @@ public class JmjController extends Frame implements AdjustmentListener, ActionLi
 	}
 
 	class MotionList extends ListWithQuicksort{
+		private static final long serialVersionUID = 8889101774998964828L;
 		void create(){
 			if(jmj.holder.countMotions() > getItemCount()){
 				String s;
@@ -131,13 +134,14 @@ public class JmjController extends Frame implements AdjustmentListener, ActionLi
 		}
 	}
 	class DidyoumeanList extends List{
+		private static final long serialVersionUID = -433897089419292807L;
 		// "Did you mean..." feature (「もしかして」機能)
 		boolean create(String inputStr){
 			removeAll();
 			// TODO: Dealing Mulitplex and/or Sync patterns
 			if(vanilla_siteswap_check(inputStr)){ // vanilla siteswap patterns
 				Set<String> strList = new HashSet<String>();
-				int[] pat = new int[jmj.LMAX];
+				int[] pat = new int[Jmj.LMAX];
 
 				int i, j;
 				int sum = 0;
@@ -151,7 +155,7 @@ public class JmjController extends Frame implements AdjustmentListener, ActionLi
 				{ // Remove one elemenet
 					// e.g. 551 => 55, 51
 					for(i = 0; i < jmj.pattw; i++){
-						int[] trial_pat = new int[jmj.LMAX];
+						int[] trial_pat = new int[Jmj.LMAX];
 						System.arraycopy(pat, 0, trial_pat, 0, i);
 						System.arraycopy(pat, i+1, trial_pat, i, jmj.pattw-i-1);
 						strList.add(pat2string(trial_pat, jmj.pattw-1));
@@ -174,14 +178,14 @@ public class JmjController extends Frame implements AdjustmentListener, ActionLi
 						for(i = 0; i < jmj.pattw; i++){ // move element index-i to index-j
 							for(j = 0; j < jmj.pattw-1; j++){
 								if(j < i-1){
-									int[] trial_pat = new int[jmj.LMAX];
+									int[] trial_pat = new int[Jmj.LMAX];
 									System.arraycopy(pat,   0, trial_pat,   0, j);
 									trial_pat[j] = pat[i];
 									System.arraycopy(pat,   j, trial_pat, j+1, i-j);
 									System.arraycopy(pat, i+1, trial_pat, i+1, jmj.pattw-1-i);
 									strList.add(pat2string(trial_pat, jmj.pattw));
 								}else if(j > i+1){
-									int[] trial_pat = new int[jmj.LMAX];
+									int[] trial_pat = new int[Jmj.LMAX];
 									System.arraycopy(pat,   0, trial_pat,   0, i);
 									System.arraycopy(pat, i+1, trial_pat,   i, j-i);
 									trial_pat[j] = pat[i];
@@ -208,7 +212,7 @@ public class JmjController extends Frame implements AdjustmentListener, ActionLi
 						int valid_sum = (average+1) * (jmj.pattw + 1);
 						int insert_value = valid_sum - sum;
 						for(i = 1; i <= jmj.pattw; i++){
-							int[] trial_pat = new int[jmj.LMAX];
+							int[] trial_pat = new int[Jmj.LMAX];
 							System.arraycopy(pat, 0, trial_pat, 0, i);
 							System.arraycopy(pat, i, trial_pat, i+1, jmj.pattw-i);
 							trial_pat[i] = insert_value;
@@ -222,7 +226,7 @@ public class JmjController extends Frame implements AdjustmentListener, ActionLi
 					int valid_sum = average * (jmj.pattw + 1);
 					int insert_value = valid_sum - sum;
 					for(i = 1; i <= jmj.pattw; i++){
-						int[] trial_pat = new int[jmj.LMAX];
+						int[] trial_pat = new int[Jmj.LMAX];
 						System.arraycopy(pat, 0, trial_pat, 0, i);
 						System.arraycopy(pat, i, trial_pat, i+1, jmj.pattw-i);
 						trial_pat[i] = insert_value;
@@ -333,7 +337,7 @@ public class JmjController extends Frame implements AdjustmentListener, ActionLi
 		speed_gauge  = new Scrollbar(Scrollbar.HORIZONTAL, 10,  3,  1,  20 +  3);
 		height_gauge = new Scrollbar(Scrollbar.HORIZONTAL, 20, 15,  1, 100 + 15);
 		dwell_gauge  = new Scrollbar(Scrollbar.HORIZONTAL, 20, 10, 10,  90 + 10);
-		perno_gauge  = new Scrollbar(Scrollbar.HORIZONTAL, iPersonNo, 1, jmj.PERMIN, jmj.PERMAX+1);
+		perno_gauge  = new Scrollbar(Scrollbar.HORIZONTAL, iPersonNo, 1, Jmj.PERMIN, Jmj.PERMAX + 1);
 		speed_gauge.setBounds( 110, 190, 100, 20);
 		height_gauge.setBounds(110, 210, 100, 20);
 		dwell_gauge.setBounds( 110, 230, 100, 20);
@@ -579,7 +583,7 @@ public class JmjController extends Frame implements AdjustmentListener, ActionLi
 	}
 	void setPerno(int i){
 		iPersonNo = i;
-		perno_gauge.setValues(iPersonNo, 1, jmj.PERMIN, jmj.iPerMax+1);
+		perno_gauge.setValues(iPersonNo, 1, Jmj.PERMIN, Jmj.iPerMax + 1);
 		setPernoLabel();
 	}
 
@@ -657,6 +661,7 @@ public class JmjController extends Frame implements AdjustmentListener, ActionLi
 		menu_quit.setEnabled(true);
 	}
 	static class JmjDialog extends Dialog implements ActionListener{
+		private static final long serialVersionUID = 1275204082629828667L;
 		public static final String STRING_LOAD = "Load a pattern file";
 		public static final String STRING_SELECT_FILE = "Select a pattern file";
 		public static final String STRING_SITESWAP = TRY_A_NEW_SITESWAP;
@@ -688,6 +693,7 @@ public class JmjController extends Frame implements AdjustmentListener, ActionLi
 		private FormationList formationList;
 
 		class FormationList extends ListWithQuicksort{
+			private static final long serialVersionUID = 6987910603772207324L;
 			void create(){
 				if(jc.jmj.holder.countFormation() > getItemCount()){
 					removeAll();
@@ -734,7 +740,6 @@ public class JmjController extends Frame implements AdjustmentListener, ActionLi
 			setVisible(false);
 		}
 		void popup(int mode){
-			String s;
 			switch(status = mode){
 				case LOAD_FILE:
 					setSize(600, 160);
@@ -883,7 +888,7 @@ public class JmjController extends Frame implements AdjustmentListener, ActionLi
 								String inputStr = textField.getText().replace(" ", "");
 								if( jc.jmj.startJuggling(Jmj.SITESWAP_MODE, inputStr) == false){
 									if(didyoumeanList.create(inputStr)){
-										this.popup(this.CHOOSE_DID_YOU_MEAN);
+										this.popup(CHOOSE_DID_YOU_MEAN);
 									}
 								}
 							}

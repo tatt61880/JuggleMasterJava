@@ -1,14 +1,11 @@
 import java.awt.*;
 import java.io.*;
-import java.lang.*;
 import java.net.*;
-import java.util.*;
-import java.awt.BasicStroke;
 import java.applet.AudioClip;
 import javax.swing.JApplet;
 
 public class Jmj extends JApplet implements Runnable{
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -1153293381918719463L;
 	String strVer = "2.22";   // Version No
 	boolean TEST_MODE = false; // Test mode : true, Release mode : false
 	public static String dirPath;
@@ -418,9 +415,7 @@ public class Jmj extends JApplet implements Runnable{
 			iXmax = (gx_max - gx_min) * dpm / (2 * DW) + HOR_CENTER;
 			iXmin = IMAGE_WIDTH - iXmax;
 
-			float DPM = (float)dpm / (float)DW;
 			iMoveX = HOR_CENTER - (gx_max + gx_min) / 2 * dpm /DW;
-
 			base = (int)(370 - (float)gy_max * dpm / 400);
 		}
 	}
@@ -474,8 +469,8 @@ public class Jmj extends JApplet implements Runnable{
 	}
 
 	void arm_line(int j){
-		int mx,my,k;
-		int sx,sy;
+		int mx, my;
+		int sx, sy;
 		int iXhosei = 0, iYhosei = 0;
 
 		if(mirror == false){
@@ -811,7 +806,7 @@ public class Jmj extends JApplet implements Runnable{
 				strs += "Formation : " + formation + "\n";
 				strs += "Pattern : " + pattern + "\n";
 				strs += "Motion : " + motion + "\n";
-				//MessageBox(strs);
+				MessageBox(strs);
 
 				// ここで motion2[]を技リストで選択された技のモーションに戻す
 			}
@@ -1316,7 +1311,7 @@ public class Jmj extends JApplet implements Runnable{
 	}
 
 	public class ImageFrame extends Frame{
-		private static final long serialVersionUID = 2L;
+		private static final long serialVersionUID = -8904800112621689298L;
 		Jmj jmj;
 		public ImageFrame(Jmj j){
 			super("Juggle Master Java " + strVer);

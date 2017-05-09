@@ -1,4 +1,3 @@
-import java.lang.*;
 import java.io.*;
 import java.util.*;
 
@@ -13,11 +12,11 @@ public class PatternHolder{
 	private Hashtable<String, byte[]> motiontable = new Hashtable<String, byte[]>();
 
 	private Vector<Piece> patternVector;
-	Enumeration en = motiontable.keys();
+	Enumeration<String> en = motiontable.keys();
 
 	// 05.01.16  T.Okada  for person's formation
 	private Hashtable<String, int[]> xyformation = new Hashtable<String, int[]>();
-	Enumeration enXY = xyformation.keys();
+	Enumeration<String> enXY = xyformation.keys();
 
 	Jmj jmj;
 	private int fline, tailindex;
@@ -28,7 +27,7 @@ public class PatternHolder{
 	int ibuf[] = new int[256];
 	byte pattbarr[];
 	String motion = Jmj.NORMAL;
-	String motion2[] = new String[jmj.PERMAX];
+	String motion2[] = new String[Jmj.PERMAX];
 
 	String formation = Jmj.FORMATION_BASIC;
 	String s;
@@ -294,7 +293,7 @@ public class PatternHolder{
 			jmj.formation = p.formation;
 
 			int iCnt;
-			for(iCnt = 0; iCnt < jmj.PERMAX; iCnt++){
+			for(iCnt = 0; iCnt < Jmj.PERMAX; iCnt++){
 				jmj.motion2[iCnt] = p.motion2[iCnt];
 			}
 		}
@@ -477,8 +476,6 @@ public class PatternHolder{
 	////////////////////////////////////////////////////////////
 	void setFormation(BufferedReader fp) throws IOException{
 		String tmp = s.substring(1, ++tailindex);
-		int iTmp, iCnt = 0;
-
 		s = fp.readLine();
 		fline++;
 		readflag = false;
@@ -547,12 +544,11 @@ public class PatternHolder{
 	//   set formation on jmj.formationarray;
 	/////////////////////////////////////////////////////////
 	void getFormation(String formation){
-		int iCnt, iXYNum;
 		jmj.formationarray = (int[])xyformation.get(formation);
+		Jmj.iPerMax = jmj.formationarray.length / 2;
 
-		jmj.iPerMax = jmj.formationarray.length / 2;
-
-		for(iCnt = 0; iCnt < jmj.iPerMax; iCnt++){
+		int iCnt;
+		for(iCnt = 0; iCnt < Jmj.iPerMax; iCnt++){
 			jmj.iXData[iCnt] = jmj.formationarray [iCnt * 2];
 			jmj.iYData[iCnt] = jmj.formationarray [iCnt * 2 + 1];
 		}
@@ -571,7 +567,7 @@ public class PatternHolder{
 	int motionToken(){
 		String strTmp;
 		int iCnt, iCnt2;
-		int iFlag[] = new int[jmj.PERMAX];
+		int iFlag[] = new int[Jmj.PERMAX];
 		int iCntToken, iCntToken2;
 		int iBefore, iAfter;
 		String strToken1, strToken2, strToken3, strMotion;
@@ -580,7 +576,7 @@ public class PatternHolder{
 		StringTokenizer st = new StringTokenizer(stmp, ",:");
 
 		try{
-			for(iCnt = 0; iCnt < jmj.PERMAX; iCnt++){
+			for(iCnt = 0; iCnt < Jmj.PERMAX; iCnt++){
 				iFlag[iCnt] = 0;
 			}
 
@@ -602,7 +598,7 @@ public class PatternHolder{
 						//  トークンが数字かチェック
 						//  iBefore, iAfter にトークンをセット
 						iBefore = Integer.valueOf(st2.nextToken()).intValue();
-						if(iBefore < 1 || jmj.PERMAX < iBefore) return -3;
+						if(iBefore < 1 || Jmj.PERMAX < iBefore) return -3;
 						iFlag[iBefore-1] = 1;
 						break;
 					case 2:
@@ -612,14 +608,14 @@ public class PatternHolder{
 						strToken2 = st2.nextToken();
 						if(strToken1.equals("-")){
 							iAfter = Integer.valueOf(strToken2).intValue();
-							if(iAfter < 1 || jmj.PERMAX < iAfter) return -4;
+							if(iAfter < 1 || Jmj.PERMAX < iAfter) return -4;
 							iBefore = 1;
 							for(iCnt2 = iBefore; iCnt2<iAfter+1; iCnt2++) iFlag[iCnt2-1] = 1;
 
 						}else if(strToken2.equals("-")){
 							iBefore = Integer.valueOf(strToken1).intValue();
-							if(iBefore < 1 || jmj.PERMAX < iBefore) return -5;
-							iAfter = jmj.PERMAX;
+							if(iBefore < 1 || Jmj.PERMAX < iBefore) return -5;
+							iAfter = Jmj.PERMAX;
 							for(iCnt2 = iBefore; iCnt2<iAfter+1; iCnt2++) iFlag[iCnt2-1] = 1;
 						}else{
 							return -123;
@@ -633,14 +629,14 @@ public class PatternHolder{
 						strToken3 = st2.nextToken();
 						if(strToken2.equals("-")){
 							iBefore = Integer.valueOf(strToken1).intValue();
-							if(iBefore < 1 || jmj.PERMAX < iBefore) return -6;
+							if(iBefore < 1 || Jmj.PERMAX < iBefore) return -6;
 							iAfter = Integer.valueOf(strToken3).intValue();
-							if(iAfter < 1 || jmj.PERMAX < iAfter) return -7;
+							if(iAfter < 1 || Jmj.PERMAX < iAfter) return -7;
 
 							if(iBefore > iAfter){
-								int iTmp = iAfter;
+								int Tmp = iAfter;
 								iAfter = iBefore;
-								iBefore = iAfter;
+								iBefore = Tmp;
 							}
 							for(iCnt2 = iBefore; iCnt2<iAfter+1; iCnt2++){
 								iFlag[iCnt2-1] = 1;
@@ -660,7 +656,7 @@ public class PatternHolder{
 			strMotion = st.nextToken().substring(1);
 
 			if(motiontable.containsKey (strMotion)){
-				for(iCnt2 = 0; iCnt2<jmj.PERMAX; iCnt2++){
+				for(iCnt2 = 0; iCnt2<Jmj.PERMAX; iCnt2++){
 					if(iFlag[iCnt2] == 1){
 						motion2[iCnt2] = strMotion;
 					}
@@ -684,7 +680,7 @@ public class PatternHolder{
 	/////////////////////////////////////////////////////////
 	void resetmotion2(){
 		int iCnt;
-		for(iCnt = 0; iCnt < jmj.PERMAX; iCnt++){
+		for(iCnt = 0; iCnt < Jmj.PERMAX; iCnt++){
 			motion2[iCnt] = "";
 		}
 		return;
