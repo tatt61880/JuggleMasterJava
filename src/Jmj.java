@@ -2,6 +2,7 @@ import java.awt.*;
 import java.io.*;
 import java.net.*;
 import java.applet.AudioClip;
+import java.applet.*;
 import javax.swing.JApplet;
 
 public class Jmj extends JApplet implements Runnable{
@@ -22,9 +23,8 @@ public class Jmj extends JApplet implements Runnable{
 	public final static int PERMIN = 1;  // person's number min
 	public final static int PERMAX = 10;  // person's number max
 	static int iPerNo = 2;   // number of person
-	private final float redrawRate = 100.0f;
-
 	static int iPerMax = iPerNo;
+	private final float redrawRate = 100.0f;
 
 	// person's position
 	int iXData[] = new int[100];
@@ -72,7 +72,7 @@ public class Jmj extends JApplet implements Runnable{
 	String siteswap;
 	String motion = NORMAL;
 	String startpattern = "Throw Twice";
-	String patternfiles = "pattern.jm/pattern_ja.jm";
+	String patternfiles = "pattern.jm|pattern_ja.jm";
 	String filename;
 	byte motionarray[] = {13, 0, 4, 0};
 
@@ -243,28 +243,15 @@ public class Jmj extends JApplet implements Runnable{
 		}
 
 		// 音声出力用
-		for(i = 0; i <= 9; i++){
-			URL url = null;
+		for(i = 0; i <= 35; i++){
+			char c = (i < 10) ? (char)((int)'0' + i) : (char)((int)'a' + i - 10);
+			String urlStr = "file:" + dirPath + "sound\\" + c + ".wav";
 			try{
-				url=getDocumentBase();
+				URL url = new URL(urlStr);
+				ac[i] = Applet.newAudioClip(url);
 			}
-			catch(Throwable e){}
-			ac[i] = getAudioClip(url,"./sound/" + i + ".wav");
-			if(ac[i] == null){
-				System.out.println("getAudioClip " + i + " failed!");
-				break;
-			}
-		}
-		for(i = 10; i <= 35; i++){
-			char c = (char)((int)'a' + i - 10);
-			URL url = null;
-			try{
-				url=getDocumentBase();
-			}
-			catch(Throwable e){}
-			ac[i] = getAudioClip(url,"./sound/" + c + ".wav");
-			if(ac[i] == null){
-				System.out.println("getAudioClip " + c + " failed!");
+			catch(MalformedURLException e){
+				System.out.println("newAudioClip failed! " + urlStr);
 				break;
 			}
 		}
@@ -1331,6 +1318,6 @@ public class Jmj extends JApplet implements Runnable{
 		dirPath = jarPath.substring(0, jarPath.lastIndexOf(File.separator)+1);
 		Jmj jmj = new Jmj();
 		jmj.initialize();
-		System.out.println("Juggle Master Java initialized!");
+		System.out.println("JuggleMaster Java initialized!");
 	}
 }

@@ -1,4 +1,4 @@
-# Juggle Master Java
+# JuggleMaster Java
 
 ## JuggleMaster について
 * JuggleMaster Version 1.60 Copyright (C) 1995-1996 Ken Matsuoka

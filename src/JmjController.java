@@ -87,7 +87,7 @@ public class JmjController extends Frame implements AdjustmentListener, ActionLi
 		void create(){
 			removeAll();
 			if(jmj.patternfiles != null){
-				String[] files = jmj.patternfiles.split("/");
+				String[] files = jmj.patternfiles.split("|");
 				for(String file : files){
 					add(file);
 				}
@@ -382,7 +382,7 @@ public class JmjController extends Frame implements AdjustmentListener, ActionLi
 
 		sound_box = new Checkbox("Sound");
 		sound_box.setBounds(50, 360, 180, 20);
-		//add(sound_box);
+		add(sound_box);
 
 		menubar = new MenuBar();
 		setMenuBar(menubar);
