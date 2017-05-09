@@ -99,9 +99,11 @@ public class JmjController extends Frame implements AdjustmentListener, ActionLi
 			if(left >= right) return;
 			swap(left, (left + right)/2);
 			last = left;
-			for(i = left + 1; i <= right; i++)
-				if(getItem(i).compareTo(getItem(left)) < 0)
+			for(i = left + 1; i <= right; i++){
+				if(getItem(i).compareTo(getItem(left)) < 0){
 					swap(++last, i);
+				}
+			}
 			swap(last,left);
 			quickSort(left, last - 1);
 			quickSort(last + 1, right);
@@ -559,7 +561,7 @@ public class JmjController extends Frame implements AdjustmentListener, ActionLi
 
 	void setLabels(){
 		pattern_value.setText(jmj.pattern);
-		ballno_value.setText(String.valueOf(jmj.ballno));
+		ballno_value.setText(String.valueOf(jmj.ballNum));
 		formation_value.setText(jmj.formation);
 		motion_value.setText(jmj.motion);
 	}

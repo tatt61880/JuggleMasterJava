@@ -2,9 +2,9 @@ public class Ball{
 	static Jmj jmj;
 
 	int bh;
-	int gx,gy;
-	int gx0,gy0;
-	int gx1,gy1;
+	int gx, gy;
+	int gx0, gy0;
+	int gx1, gy1;
 	int c;
 	int c0;
 	int chand;

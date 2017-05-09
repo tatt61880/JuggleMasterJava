@@ -17,7 +17,7 @@ public class Jmj extends JApplet implements Runnable{
 	public final static int XR = 1024;
 	public final static int DW = 290;
 
-	public final static int BMAX = 35;
+	public final static int BALL_NUM_MAX = 35;
 	public final static int LMAX = 200;
 	public final static int MMAX = 11;
 	public final static String NORMAL = "Normal";
@@ -103,10 +103,10 @@ public class Jmj extends JApplet implements Runnable{
 	int intsyn;
 
 	Ball rhand[] = new Ball[PERMAX], lhand[] = new Ball[PERMAX];   // hand object
-	Ball b[] = new Ball[BMAX];  // ball object
+	Ball b[] = new Ball[BALL_NUM_MAX];  // ball object
 	int tw;
 	int aw;
-	int ballno;
+	int ballNum;
 	int max_height;
 
 	int jPerNo;       // person's No for ball.juggling()
@@ -117,7 +117,7 @@ public class Jmj extends JApplet implements Runnable{
 	int patts[] = new int[LMAX];
 	int pattw;
 	int r[] = new int[LMAX*2];
-	float high[] = new float[BMAX+1];
+	float high[] = new float[BALL_NUM_MAX+1];
 	int patt_x;
 	int kw0;
 	String singleSS[] = new String[LMAX];
@@ -223,7 +223,7 @@ public class Jmj extends JApplet implements Runnable{
 		controller.setVisible(true);
 		controller.enableMenuBar();
 
-		for( int i = 0; i < BMAX; i++ ){
+		for( int i = 0; i < BALL_NUM_MAX; i++ ){
 			b[i] = new Ball();
 		}
 		Ball.jmj = this;
@@ -432,7 +432,7 @@ public class Jmj extends JApplet implements Runnable{
 	void set_xmin_xmax(){
 		for(timeCount = 0; timeCount < tw * (pattw + max_height + (motionarray.length / 4)); timeCount++){
 			int i;
-			for(i = 0; i < ballno; i++){
+			for(i = 0; i < ballNum; i++){
 				b[i].juggle();
 				gy_max = Math.max(gy_max, b[i].gy);
 				gy_min = Math.min(gy_min, b[i].gy);
@@ -524,34 +524,34 @@ public class Jmj extends JApplet implements Runnable{
 	boolean pattInitialize(){
 		// return false if wrong siteswap;
 		float tw0, aw0;
-		ballno = 0;
+		ballNum = 0;
 		max_height = 0;
 
 		int i, j, k;
 		for(i = 0; i < pattw; i++){
 			for(j = 0; j < patts[i]; j++){
-				ballno += Math.abs(patt[i][j]);
+				ballNum += Math.abs(patt[i][j]);
 				max_height = Math.max(max_height, Math.abs(patt[i][j]));
 			}
 		}
-		if(ballno % pattw != 0){
-			System.out.println("ballno % pattw != 0");
+		if(ballNum % pattw != 0){
+			System.out.println("ballNum % pattw != 0");
 			return false;
 		}
-		ballno /= pattw;
-		if(ballno > BMAX){
+		ballNum /= pattw;
+		if(ballNum > BALL_NUM_MAX){
 			System.out.println("Too many balls");
 			return false;
 		}
 		for(i = 0; i < LMAX * 2; i++){
 			r[i] = 0;
 		}
-		for(i = 0; i <= ballno; i++){
+		for(i = 0; i <= ballNum; i++){
 			j = 0;
 			while (r[j] == patts[j % pattw] && j < pattw + max_height){
 				j++;
 			}
-			if(i == ballno){
+			if(i == ballNum){
 				if(j == pattw + max_height){
 					break;
 				}else{
@@ -605,8 +605,7 @@ public class Jmj extends JApplet implements Runnable{
 		if(max_height < 3){
 			max_height = 3;
 		}
-		tw0 = (float)Math.sqrt(2 / ga * max_height * height) * 2
-			/ (max_height - dwell * 2) * redrawRate / speed;
+		tw0 = (float)Math.sqrt(2 / ga * max_height * height) * 2 / (max_height - dwell * 2) * redrawRate / speed;
 		tw = (int)fadd(tw0, 0);
 		if(tw == 0){
 			System.out.println("tw = 0");
@@ -627,11 +626,10 @@ public class Jmj extends JApplet implements Runnable{
 		high[0] = -.2f * dpm;
 		high[1] = (int)(ga * square(tw0 / redrawRate * speed) / 8 * dpm);
 		for(i = 2; i <= max_height; i++){
-			high[i] = (int)(ga * square((tw0 * i - aw0) / redrawRate * speed)
-					/ 8 * dpm);
+			high[i] = (int)(ga * square((tw0 * i - aw0) / redrawRate * speed) / 8 * dpm);
 		}
 
-		for(i = 0; i < ballno; i++){
+		for(i = 0; i < ballNum; i++){
 			b[i].bh = 0;
 			b[i].gx = 0;
 			b[i].gy = VER_CENTER;
@@ -898,9 +896,9 @@ public class Jmj extends JApplet implements Runnable{
 		timeCount = 0;
 		time_period = 0;
 
+		status = State.JUGGLING;
 		kicker = new Thread(this);
 		kicker.start();
-		status = State.JUGGLING;
 		return true;
 	}
 	public void run(){
@@ -929,7 +927,7 @@ public class Jmj extends JApplet implements Runnable{
 		drawStatus();
 
 		int i;
-		for(i = 0; i < ballno; i++){
+		for(i = 0; i < ballNum; i++){
 			b[i].juggle();
 		}
 
@@ -1180,7 +1178,7 @@ public class Jmj extends JApplet implements Runnable{
 		}
 
 		// erase ball
-		for(i = ballno - 1; i >= 0; i--){
+		for(i = ballNum - 1; i >= 0; i--){
 			fillBox(b[i].gx0 / 8, b[i].gy0 + bm1,
 					b[i].gx0 / 8 + 3, b[i].gy0 + bm2);
 		}
@@ -1204,7 +1202,7 @@ public class Jmj extends JApplet implements Runnable{
 				drawCircle(ap[j].hx, ap[j].hy, ap[j].hr);
 			}
 		}
-		for(i = ballno - 1; i >= 0; i--){
+		for(i = ballNum - 1; i >= 0; i--){
 			drawBall(bm[15 - i % 13], b[i].gx, b[i].gy);
 		}
 	}
@@ -1338,6 +1336,6 @@ public class Jmj extends JApplet implements Runnable{
 		dirPath = jarPath.substring(0, jarPath.lastIndexOf(File.separator)+1);
 		Jmj jmj = new Jmj();
 		jmj.initialize();
-		System.out.println("JuggleMaster initialized!");
+		System.out.println("Juggle Master Java initialized!");
 	}
 }
