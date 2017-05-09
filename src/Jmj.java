@@ -530,7 +530,7 @@ public class Jmj extends JApplet implements Runnable{
 		}
 		for(i = 0; i <= ballNum; i++){
 			j = 0;
-			while (r[j] == patts[j % pattw] && j < pattw + max_height){
+			while(r[j] == patts[j % pattw] && j < pattw + max_height){
 				j++;
 			}
 			if(i == ballNum){
@@ -565,7 +565,7 @@ public class Jmj extends JApplet implements Runnable{
 			}else{
 				b[i].c = -j;
 			}
-			while (j < pattw + max_height){
+			while(j < pattw + max_height){
 				if(r[j] == patts[j % pattw]){
 					return false;
 				}else{
@@ -579,7 +579,7 @@ public class Jmj extends JApplet implements Runnable{
 						j += -k - 1;
 					}
 				}else{
-					j+=k;
+					j += k;
 				}
 			}
 		}
@@ -951,7 +951,7 @@ public class Jmj extends JApplet implements Runnable{
 	}
 
 	float fadd(float t, int x){
-		return (float)(Math.floor(t * Math.pow(10, x) + .5f)/Math.pow(10, x));
+		return (float)(Math.floor(t * Math.pow(10, x) + 0.5f) / Math.pow(10, x));
 	}
 
 	// class ImageFrame extends Frame{
@@ -1006,9 +1006,9 @@ public class Jmj extends JApplet implements Runnable{
 		}
 	}
 	int toIndex(char c){
-		if(c >= '0' && c <= '9'){
+		if('0' <= c && c <= '9'){
 			return c - '0';
-		}else if(c >= 'a' && c <= 'z'){
+		}else if('a' <= c && c <= 'z'){
 			return c - 'a' + 10;
 		}else{
 			return 0;
@@ -1025,7 +1025,7 @@ public class Jmj extends JApplet implements Runnable{
 				}else{
 					for(int i = 0; i<str.length(); i++){
 						char c = str.charAt(i);
-						if((c >= '0' && c <= '9') || (c >= 'a' && c <= 'z' && c != 'x')){
+						if(('0' <= c && c <= '9') || ('a' <= c && c <= 'z' && c != 'x')){
 							ac[toIndex(c)].play();
 						}
 					}
@@ -1060,7 +1060,7 @@ public class Jmj extends JApplet implements Runnable{
 	}
 	void initBallGraphics(){
 		int data[] = {
-			0, 18, 0,23,17,23,20,22,
+			 0,18, 0,23,17,23,20,22,
 			22,20,23,17,23,12,18,12,
 			18,16,16,18, 0,18,
 			12,15,23,17

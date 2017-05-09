@@ -48,7 +48,7 @@ public class PatternHolder{
 		readflag = true;
 		dwell = 0.5f;
 		patternVector = new Vector<Piece>();
-		height = .2f;
+		height = 0.2f;
 		fline = 0;
 		try{
 			resetmotion2();
@@ -442,7 +442,7 @@ public class PatternHolder{
 		return 0;
 	}
 	float fadd(float t, int x){
-		return (float)(Math.floor(t * Math.pow(10, x) + .5f)/Math.pow(10, x));
+		return (float)(Math.floor(t * Math.pow(10, x) + 0.5f) / Math.pow(10, x));
 	}
 	void rewindMotion(){
 		en = motiontable.keys();
@@ -455,14 +455,14 @@ public class PatternHolder{
 		}
 	}
 	void getMotion(String motion){
-		jmj.motionarray = (byte [] )motiontable.get(motion);
+		jmj.motionarray = (byte [])motiontable.get(motion);
 	}
 
 	void getMotion2(String motion, int iPer){
 		if(motiontable == null){
 			System.out.println("motiontable == null\n");
 		}
-		jmj.motionarray2[iPer] = (byte [] )motiontable.get(motion);
+		jmj.motionarray2[iPer] = (byte [])motiontable.get(motion);
 		jmj.motionlength[iPer] = jmj.motionarray2[iPer].length;
 	}
 
