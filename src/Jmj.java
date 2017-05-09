@@ -1301,7 +1301,7 @@ public class Jmj extends JApplet implements Runnable{
 		private static final long serialVersionUID = -8904800112621689298L;
 		Jmj jmj;
 		public ImageFrame(Jmj j){
-			super("Juggle Master Java " + strVer);
+			super("JuggleMaster Java " + strVer);
 			jmj = j;
 		}
 		final public void update(Graphics g){

@@ -14,7 +14,6 @@ public class PatternHolder{
 	private Vector<Piece> patternVector;
 	Enumeration<String> en = motiontable.keys();
 
-	// 05.01.16  T.Okada  for person's formation
 	private Hashtable<String, int[]> xyformation = new Hashtable<String, int[]>();
 	Enumeration<String> enXY = xyformation.keys();
 
@@ -204,7 +203,7 @@ public class PatternHolder{
 			readflag = false;
 			}
 		}
-	byte []parsePattern(String s){
+	byte[] parsePattern(String s){
 		int bindex = 0;
 		char c;
 		for(next = 0; next <= tailindex; next++ ){
@@ -455,14 +454,14 @@ public class PatternHolder{
 		}
 	}
 	void getMotion(String motion){
-		jmj.motionarray = (byte [])motiontable.get(motion);
+		jmj.motionarray = (byte[])motiontable.get(motion);
 	}
 
 	void getMotion2(String motion, int iPer){
 		if(motiontable == null){
 			System.out.println("motiontable == null\n");
 		}
-		jmj.motionarray2[iPer] = (byte [])motiontable.get(motion);
+		jmj.motionarray2[iPer] = (byte[])motiontable.get(motion);
 		jmj.motionlength[iPer] = jmj.motionarray2[iPer].length;
 	}
 
@@ -470,10 +469,6 @@ public class PatternHolder{
 		return motiontable.size();
 	}
 
-	/////////////////////////////////////////////////////////////
-	//   void setFormation(BufferedReader fp)
-	//   Set person's formation
-	////////////////////////////////////////////////////////////
 	void setFormation(BufferedReader fp) throws IOException{
 		String tmp = s.substring(1, ++tailindex);
 		s = fp.readLine();
@@ -701,7 +696,7 @@ public class PatternHolder{
 			name = nm;
 			isPattern = isPat;
 		}
-		Piece(boolean isPat, String nm, String mt, byte []ss, float hght, float ht, String fm, String mt2[]){
+		Piece(boolean isPat, String nm, String mt, byte[] ss, float hght, float ht, String fm, String mt2[]){
 			name = nm;
 			motion = mt;
 			siteswap = ss;

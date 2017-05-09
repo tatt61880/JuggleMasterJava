@@ -269,7 +269,7 @@ public class JmjController extends Frame implements AdjustmentListener, ActionLi
 	}
 
 	public JmjController(Jmj jmj, String quitflag){
-		super("Juggle Master Java " + jmj.strVer);
+		super("JuggleMaster Java " + jmj.strVer);
 		this.jmj = jmj;
 
 		setSize(480, 470);
