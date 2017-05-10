@@ -69,6 +69,7 @@ public class PatternHolder{
 						if(fallback_incrementflag){
 							jmj.fallback_startindex++;
 						}
+						continue;
 					case ';':
 						continue;
 					case '#':
@@ -87,7 +88,6 @@ public class PatternHolder{
 							jmj.MessageBox(strtt);
 						}
 						continue;
-
 					default:
 						fallback_incrementflag = false;
 						pattbarr = parsePattern(s);
@@ -283,7 +283,7 @@ public class PatternHolder{
 			if(!isPattern(index)){
 				return false;
 			}
-			Piece p = (Piece)patternVector.elementAt(index);
+			Piece p = patternVector.elementAt(index);
 			jmj.pattern = p.name;
 			jmj.motion = p.motion;
 			jmj.height = p.height;
@@ -416,7 +416,7 @@ public class PatternHolder{
 		int n = patternVector.size();
 		for(int i = 0; i < n; i++){
 			if(patternVector.elementAt(i).isPattern){
-				if(((Piece)patternVector.elementAt(i)).name.equals(trickName)){
+				if((patternVector.elementAt(i)).name.equals(trickName)){
 					jmj.controller.patternList.select(i);
 					return i;
 				}
@@ -448,20 +448,20 @@ public class PatternHolder{
 	}
 	String nextMotion(){
 		if(en.hasMoreElements()){
-			return (String) en.nextElement();
+			return en.nextElement();
 		}else{
 			return new String();
 		}
 	}
 	void getMotion(String motion){
-		jmj.motionarray = (byte[])motiontable.get(motion);
+		jmj.motionarray = motiontable.get(motion);
 	}
 
 	void getMotion2(String motion, int iPer){
 		if(motiontable == null){
 			System.out.println("motiontable == null\n");
 		}
-		jmj.motionarray2[iPer] = (byte[])motiontable.get(motion);
+		jmj.motionarray2[iPer] = motiontable.get(motion);
 		jmj.motionlength[iPer] = jmj.motionarray2[iPer].length;
 	}
 
@@ -528,7 +528,7 @@ public class PatternHolder{
 	}
 	String nextFormation(){
 		if(enXY.hasMoreElements()){
-			return (String) enXY.nextElement();
+			return enXY.nextElement();
 		}else{
 			return new String();
 		}
@@ -539,7 +539,7 @@ public class PatternHolder{
 	//   set formation on jmj.formationarray;
 	/////////////////////////////////////////////////////////
 	void getFormation(String formation){
-		jmj.formationarray = (int[])xyformation.get(formation);
+		jmj.formationarray = xyformation.get(formation);
 		Jmj.iPerMax = jmj.formationarray.length / 2;
 
 		int iCnt;

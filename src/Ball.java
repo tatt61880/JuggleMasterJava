@@ -72,15 +72,15 @@ public class Ball{
 		// Determine Catch&Throw person
 
 		if(c < 0){
-			cPer = (int)(-c / 2) % Jmj.iPerNo;
+			cPer = (-c / 2) % Jmj.iPerNo;
 		}else{
-			cPer = (int)(c / 2) % Jmj.iPerNo;
+			cPer = (c / 2) % Jmj.iPerNo;
 		}
 
 		if(c0 < 0){
-			tPer = (int)(-c0 / 2) % Jmj.iPerNo;
+			tPer = (-c0 / 2) % Jmj.iPerNo;
 		}else{
-			tPer = (int)(c0 / 2) % Jmj.iPerNo;
+			tPer = (c0 / 2) % Jmj.iPerNo;
 		}
 
 		if(iFlag == Math.abs(bh)){
@@ -295,16 +295,16 @@ public class Ball{
 		}else{
 			if(bh==1){
 				fx = (float)(tp - jmj.aw) / jmj.tw * 2 + 1;
-				y = (long)((float)jmj.high[1] * (1 - square(fx)));
+				y = (long)(jmj.high[1] * (1 - square(fx)));
 			}else if((st & OBJECT_UNDER) != 0){
 				fx = (float)tp / jmj.aw * 2 - 1;
-				y = (long)((float)jmj.high[0] * (1 - square(fx)));
+				y = (long)(jmj.high[0] * (1 - square(fx)));
 			}else{
 				fx = (float)tp / (jmj.tw * Math.abs(bh) - jmj.aw) * 2 + 1;
-				y = (long)((float)jmj.high[Math.abs(bh)] * (1 - square(fx)));
+				y = (long)(jmj.high[Math.abs(bh)] * (1 - square(fx)));
 			}
 
-			y += (float)(fx * (rpoz - tpoz) + rpoz + tpoz) * jmj.dpm / 40;
+			y += (fx * (rpoz - tpoz) + rpoz + tpoz) * jmj.dpm / 40;
 			fx = (fx * (rpox - tpox) + rpox + tpox) / 20;
 		}
 

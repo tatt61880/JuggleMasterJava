@@ -1,8 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 
 public class MessageBox extends JApplet{
+	private static final long serialVersionUID = 9038879225715897970L;
 	int patt[][] = new int[200][11];
 	int patts[] = new int[200];
 	int pattw;
